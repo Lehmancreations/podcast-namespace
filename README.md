@@ -11,10 +11,28 @@ will become the framework that the independent podcast community needs to delive
 
 ## Current Roadmap
 
-**Phase 1** - Comment period closes on `11/15/20` and tags that have good consensus will be adopted.  Any tags with questions, concerns or no discernable use case will be either
-              removed or booted to Phase 2.
+**Phase 1** - [Closed] Comment period closed on `11/15/20` and 5 tags were adopted.
 
-**Phase 2** - This phase is currently open for tag proposals and ideas.
+**Phase 2** - [Closed] Comment period closed on `1/31/21` and 4 tags were adopted.
+
+**Phase 3** - [Open] Proposals welcome.  No dates assigned.
+
+<br><br>
+
+
+## Legend
+
+**Formalized** - This tag is frozen and listed in the XMLNS document.  Any future changes to it's definition must maintain backwards compatibility.
+
+**Finalized** - The tag is structurally stable and implementation testing should be considered safe.  Any breaking changes will be widely communicated.
+
+**Open** - The tag/phase is open for discussion and collaboration.
+
+**Required** - This tag or attribute must be present.
+
+**Optional** - This tag or attribute may be left out.
+
+**Recommended** - This tag or attribute is technically optional, but is strongly recommended to be present for the tag to function as fully intended.
 
 
 <br><br>
@@ -84,10 +102,7 @@ To see a list of platforms and apps that currently implement some or all of thes
 
 ## Example Feed
 
-There is an example feed [example.xml](example.xml) in this repository showing the podcastindex namespace side by side with the Apple itunes namespace.  There is also
-a "sandbox" feed where we experiment with tags while they are being hashed out.
-
-The url for that feed is:  [https://noagendaassets.com/enc/pc20sandbox.xml](https://noagendaassets.com/enc/pc20sandbox.xml).
+There is an example feed [example.xml](example.xml) in this repository showing the podcastindex namespace side by side with the Apple itunes namespace.
 
 <br><br>
 
@@ -108,63 +123,41 @@ full implementation details.
 
 <br><br>
 
-
-### <u>Phase 2 (Open)</u>
-
-- **\<podcast:person name="[name of person]" (role="[host,guest,etc.]") (group="[cast,writing,etc.]") (img="[uri of content]") (href="[uri to Podchaser/website/wiki/blog]") />**
-
-   Channel or Item (optional | multiple)
-
-   This element specifies a person of interest to the podcast.  It is primarily intended to identify people like hosts, co-hosts and guests.  Although, it is flexible enough to allow fuller credits to be given using the roles
-   and groups that are listed in the Podcast Taxonomy Project.  (link needed)
-
-   - `name` (required) This is the full name or alias of the person.
-   - `role` (optional) Used to identify what role the person serves on the show or episode. This should be a reference to an official role within the Podcast Taxonomy Project list. If `role` is missing then "host" is assumed.
-   - `group` (optional) This should be a camel-cased, alphanumeric reference to an official group within the Podcast Taxonomy Project list. If `group` is not present, then "cast" is assumed.
-   - `img` (optional) This is the url of a picture or avatar of the person.
-   - `href` (optional) Link to a relevant resource of information about the person. (eg. Podchaser profile, website, blog or wiki entry).  Linking to the Podchaser profile url is highly encouraged as the standard for this url.  In a case
-                       where there is no Podchaser profile, then a link to the person's website, blog, wiki entry, etc. can be used.
-
-   The maximum recommended string length of the node value is 128 characters.
+### <u>Phase 2 (Closed on 1/31/21)</u>
 
 <br>
 
-- **\<podcast:location country="[Country Code]" (locality="[Locality]") (latlon="[latitude,longitude]") (osmid="[OSM type][OSM id]") />**
+The following tags have been formally adopted into the namespace.  They are fully documented in the XMLNS document located [here](docs/1.0.md).  Please see that file for
+full implementation details.
 
-   Channel (optional | single)
+- **\<podcast:person>** <br>
+- **\<podcast:location>** <br>
+- **\<podcast:season>** <br>
+- **\<podcast:episode>** <br>
 
-   Item (optional | multiple)
+<br><br>
 
-   This element must contain, at minimum, a country code.  Although, an OSM specification or latitude/longitude is highly recommended.  The purpose of this tag is to allow specifying
-   locations relevant to this podcast or episode.  It can be used as simply as a single tag in the channel to show the "home base" of where a podcast is produced.  Or, more thoroughly
-   for a travel podcast to specify locations that were visited during each episode.  Also, a history podcast could reference points of interest discussed.  There are many possible uses.
 
-   The country code is required, but if either `osmid` or `latlon` is present in the tag, it will take priority over the country code.
+### <u>Phase 3 (Open)</u>
 
-    - `country`: (required) The ISO 3166-1 alpha-2 country code, eg 'US'. (Note that the United Kingdom is 'GB', not 'UK'.)
-    - `locality`: (recommended) This is a humanly-readable place name as preferred by the podcast publisher for display in an app. Valid values are "Houses of Parliament", or "North Michigan", or "27 Acacia Avenue, Hammersmith".
-                                For programmatic use, developers should use latlon or (better) geo-IDs.
-    - `latlon`: (recommended) A latitude/longitude point reflecting the location associated with this show or episode. This could be where it is made, or alternatively a location which
-                         features in the podcast.
-    - `osmid`: (recommended) From the OpenStreetMap API. If a value is given for osmid it must contain both 'type' and 'id'.
-        - osm type: A one-character description of the type of OSM point. Valid is "N" (node); "W" (way); "R" (relation).
-        - osm id: The ID of the OpenStreetMap feature that is described. This may be a city or a building. While OSM IDs are not considered permanent, cities rarely disappear.
-
-   The maximum recommended string character length of the node value is 128 characters.
+The following tags should be considered purely as proposals.  They should not be relied upon or implemented except for testing purposes and experimentation.
 
 <br>
 
-- **\<podcast:season title="[title of season]">**[(int)]**\</podcast:season>**
+- **\<podcast:id platform="[service slug]" id="[platform id]" url="[link to the podcast page on the service]" />**
 
-   Item
+   Channel
 
-   (optional | single)
+   (optional | multiple)
 
-   This element allows for identifying which episodes in a podcast are part of a "season", and allowing that season to have a title associate with it.  The element's value is an integer identifying the season number.
+   See "[IDs](#user-content-ids)" in this document for an explanation.
 
-   All attributes are optional.
+   - `platform` (required) This is the service slug of the platform.
+   - `id` (required) This is the unique identifier for this podcast on the respective platform.
+   - `url` (optional) A url to the page for this podcast on the respective platform.
 
 <br>
+
 
 - **\<podcast:social platform="[service slug]" url="[link to social media account]">**[social media handle]**\</podcast:social>**
 
@@ -265,20 +258,6 @@ full implementation details.
    repo for an example of how this looks in practice.
 
    All attributes are required.
-
-<br>
-
-- **\<podcast:id platform="[service slug]" id="[platform id]" url="[link to the podcast page on the service]" />**
-
-   Channel
-
-   (optional | multiple)
-
-   See "[IDs](#user-content-ids)" in this document for an explanation.
-
-   - `platform` (required) This is the service slug of the platform.
-   - `id` (required) This is the unique identifier for this podcast on the respective platform.
-   - `url` (optional) A url to the page for this podcast on the respective platform.
 
 <br>
 
